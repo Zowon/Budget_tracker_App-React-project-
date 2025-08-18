@@ -1,0 +1,29 @@
+.card {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.card--padding-small {
+  padding: var(--spacing-md);
+}
+
+.card--padding-medium {
+  padding: var(--spacing-lg);
+}
+
+.card--padding-large {
+  padding: var(--spacing-xl);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card--padding-medium {
+    padding: var(--spacing-md);
+  }
+  
+  .card--padding-large {
+    padding: var(--spacing-lg);
+  }
+} 

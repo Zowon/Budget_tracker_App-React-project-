@@ -1,0 +1,208 @@
+.expense-item {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.expense-item:hover {
+  background-color: #f8fafc;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-item td {
+  padding: 16px 12px;
+  vertical-align: middle;
+}
+
+/* Expense Name */
+.expense-name {
+  min-width: 200px;
+}
+
+.expense-name-text {
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+/* Progress Bar */
+.expense-progress {
+  min-width: 150px;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #7539FF;
+  border-radius: 4px;
+  transition: width 0.2s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* Amount */
+.expense-amount {
+  min-width: 120px;
+}
+
+.amount-text {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+/* Date */
+.expense-date {
+  min-width: 120px;
+}
+
+.date-text {
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* User */
+.expense-user {
+  min-width: 120px;
+}
+
+.user-text {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Actions */
+.expense-actions {
+  min-width: 100px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.action-button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-edit {
+  color: #7539FF;
+}
+
+.action-edit:hover {
+  background-color: rgba(117, 57, 255, 0.1);
+}
+
+.action-delete {
+  color: #ef4444;
+}
+
+.action-delete:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.action-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Focus styles for accessibility */
+.action-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(117, 57, 255, 0.3);
+}
+
+.action-edit:focus {
+  box-shadow: 0 0 0 3px rgba(117, 57, 255, 0.3);
+}
+
+.action-delete:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .expense-item td {
+    padding: 12px 8px;
+  }
+  
+  .expense-name {
+    min-width: 150px;
+  }
+  
+  .expense-progress {
+    min-width: 120px;
+  }
+  
+  .progress-container {
+    gap: 4px;
+  }
+  
+  .progress-text {
+    font-size: 11px;
+    min-width: 25px;
+  }
+  
+  .expense-amount {
+    min-width: 100px;
+  }
+  
+  .expense-date {
+    min-width: 100px;
+  }
+  
+  .expense-user {
+    min-width: 100px;
+  }
+  
+  .expense-actions {
+    min-width: 80px;
+  }
+  
+  .action-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .action-button svg {
+    width: 14px;
+    height: 14px;
+  }
+} 

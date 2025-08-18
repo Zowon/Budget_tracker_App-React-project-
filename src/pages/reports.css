@@ -1,0 +1,71 @@
+.reports-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.reports-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.reports-content {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.reports-placeholder {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.placeholder-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+}
+
+.reports-placeholder h2 {
+  margin: 0 0 16px 0;
+  color: #1e293b;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.reports-placeholder p {
+  margin: 0 0 8px 0;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.reports-placeholder p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reports-content {
+    padding: 40px 20px;
+  }
+  
+  .placeholder-icon {
+    font-size: 48px;
+  }
+  
+  .reports-placeholder h2 {
+    font-size: 20px;
+  }
+  
+  .reports-placeholder p {
+    font-size: 14px;
+  }
+} 

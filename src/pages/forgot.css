@@ -1,0 +1,152 @@
+.forgot-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background-color: var(--background-secondary);
+}
+
+/* Forgot password form specific styles */
+.forgot-form {
+  width: 100%;
+  max-width: 594px;
+}
+
+.reset-button {
+  margin-bottom: var(--spacing-xl);
+  width: 594px;
+  height: 48px;
+}
+
+.signup-link {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  width: 594px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-link__text {
+  color: var(--primary-color);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.signup-link__text:hover {
+  text-decoration: underline;
+}
+
+/* Success state styles */
+.success-actions {
+  width: 100%;
+  max-width: 594px;
+}
+
+.back-to-login-button {
+  margin-bottom: var(--spacing-lg);
+  width: 594px;
+  height: 48px;
+}
+
+.resend-link {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.resend-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.resend-button:hover:not(:disabled) {
+  color: var(--primary-hover);
+}
+
+.resend-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Forgot password illustration styles */
+.forgot-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.reset-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Success illustration styles */
+.success-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--spacing-lg);
+}
+
+.success-icon {
+  font-size: 64px;
+  margin-bottom: var(--spacing-md);
+}
+
+.success-message h3 {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.success-message p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .reset-image {
+    max-width: 90%;
+  }
+  
+  .reset-button,
+  .back-to-login-button {
+    width: 100%;
+  }
+  
+  .signup-link {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .reset-image {
+    max-width: 80%;
+  }
+  
+  .success-icon {
+    font-size: 48px;
+  }
+  
+  .reset-button,
+  .back-to-login-button {
+    width: 100%;
+  }
+  
+  .signup-link {
+    width: 100%;
+  }
+} 
