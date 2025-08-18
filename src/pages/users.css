@@ -1,0 +1,530 @@
+.users-page {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* Page Header */
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  background-color: #F9FAFB;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+  justify-content: center;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.add-user-button {
+  width: 142px;
+  height: 40px;
+  background-color: #7C3AED;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 9px 19px;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.add-user-button:hover {
+  background-color: #6D28D9;
+}
+
+.add-user-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+}
+
+@media (max-width: 768px) {
+  .add-user-button {
+    width: auto;
+    min-width: 120px;
+    padding: 8px 16px;
+  }
+}
+
+/* Search */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+  color: #374151;
+  width: 300px;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  width: 350px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Users Table */
+.users-content {
+  margin-bottom: 24px;
+}
+
+.users-table-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #F3F4F6;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.users-table-header {
+  background-color: #F9FAFB;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.users-table-header th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 500;
+  color: #6B7280;
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: 0;
+  border-bottom: none;
+}
+
+.header-name {
+  min-width: 200px;
+}
+
+.header-email {
+  min-width: 200px;
+}
+
+.header-phone {
+  min-width: 150px;
+}
+
+.header-role {
+  min-width: 120px;
+}
+
+.header-actions {
+  min-width: 100px;
+  text-align: center;
+}
+
+.users-table-body {
+  background-color: white;
+}
+
+/* User Item */
+.user-item {
+  border-bottom: 1px solid #F3F4F6;
+  transition: background-color 0.2s ease;
+}
+
+.user-item:hover {
+  background-color: #F9FAFB;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-item td {
+  padding: 16px 12px;
+  vertical-align: middle;
+}
+
+/* User Name */
+.user-name {
+  min-width: 200px;
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #7c3aed;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.name-text {
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+/* User Email */
+.user-email {
+  min-width: 200px;
+}
+
+.email-text {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* User Phone */
+.user-phone {
+  min-width: 150px;
+}
+
+.phone-text {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* User Role */
+.user-role {
+  min-width: 120px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.role-admin {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.role-manager {
+  background-color: #DBEAFE;
+  color: #1E40AF;
+}
+
+.role-user {
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+
+/* Actions */
+.user-actions {
+  min-width: 100px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.action-button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-edit {
+  color: #7C3AED;
+}
+
+.action-edit:hover {
+  background-color: rgba(124, 58, 237, 0.1);
+}
+
+.action-delete {
+  color: #ef4444;
+}
+
+.action-delete:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.action-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Focus styles for accessibility */
+.action-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+}
+
+.action-edit:focus {
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+}
+
+.action-delete:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-content h3 {
+  margin: 0 0 8px 0;
+  color: #1e293b;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.empty-content p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Pagination Section */
+.pagination-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.pagination-info {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-text {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #E5E7EB;
+  background-color: white;
+  color: #6B7280;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: #7C3AED;
+  color: #7C3AED;
+  background-color: #F3F4F6;
+}
+
+.pagination-btn.active {
+  background-color: #7C3AED;
+  color: white;
+  border-color: #7C3AED;
+}
+
+.pagination-btn.ellipsis {
+  border: none;
+  background: none;
+  cursor: default;
+  width: auto;
+  padding: 0 4px;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .search-input {
+    width: 250px;
+  }
+  
+  .search-input:focus {
+    width: 300px;
+  }
+  
+  .users-table-header th {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+  
+  .user-item td {
+    padding: 12px 8px;
+  }
+  
+  .header-name {
+    min-width: 150px;
+  }
+  
+  .header-email {
+    min-width: 150px;
+  }
+  
+  .header-phone {
+    min-width: 120px;
+  }
+  
+  .header-role {
+    min-width: 100px;
+  }
+  
+  .header-actions {
+    min-width: 80px;
+  }
+  
+  .action-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .action-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .users-page {
+    padding: 16px;
+  }
+  
+  .page-title {
+    font-size: 20px;
+  }
+  
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .header-center {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .add-user-button {
+    width: 100%;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  .search-input:focus {
+    width: 100%;
+  }
+  
+  .pagination-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .pagination-controls {
+    justify-content: center;
+  }
+  
+  .empty-state {
+    padding: 40px 20px;
+  }
+  
+  .empty-icon {
+    font-size: 36px;
+  }
+  
+  .empty-content h3 {
+    font-size: 16px;
+  }
+  
+  .empty-content p {
+    font-size: 13px;
+  }
+}

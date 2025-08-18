@@ -17,26 +17,34 @@
 }
 
 .sidebar-header {
-  padding: 24px;
+  padding: 12px 24px;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .logo-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
+  height: 40px;
+  min-height: 40px;
 }
 
 .logo {
   width: 32px;
   height: 32px;
   object-fit: contain;
+  flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .logo-text {
   font-size: 18px;
   font-weight: 700;
   color: #1e293b;
+  line-height: 40px;
+  margin: 0;
+  padding: 0;
+  height: 40px;
 }
 
 .sidebar-nav {
@@ -76,7 +84,7 @@
 }
 
 .nav-link.active {
-  background-color: #7539FF;
+  background-color: #7C3AED;
   color: white;
 }
 
@@ -91,9 +99,31 @@
 }
 
 .nav-icon {
-  font-size: 18px;
   width: 20px;
-  text-align: center;
+  height: 20px;
+  object-fit: contain;
+  transition: all 0.2s ease;
+}
+
+/* SVG icon styling for different states */
+.nav-link .nav-icon {
+  filter: invert(0.4) sepia(0) saturate(0) hue-rotate(0deg) brightness(1) contrast(1);
+}
+
+.nav-link:hover .nav-icon {
+  filter: invert(0.2) sepia(0) saturate(0) hue-rotate(0deg) brightness(1) contrast(1);
+}
+
+.nav-link.active .nav-icon {
+  filter: invert(1) sepia(0) saturate(0) hue-rotate(0deg) brightness(1) contrast(1);
+}
+
+.nav-link.logout-link .nav-icon {
+  filter: invert(0.2) sepia(1) saturate(5) hue-rotate(0deg) brightness(0.8) contrast(1);
+}
+
+.nav-link.logout-link:hover .nav-icon {
+  filter: invert(0.1) sepia(1) saturate(7) hue-rotate(0deg) brightness(0.7) contrast(1);
 }
 
 .nav-text {
@@ -113,13 +143,15 @@
 .top-header {
   background-color: white;
   border-bottom: 1px solid #e2e8f0;
-  padding: 16px 24px;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 50;
+  height: 64px;
+  min-height: 64px;
 }
 
 .header-left {
@@ -130,7 +162,8 @@
 .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  height: 40px;
 }
 
 .notification-btn {
@@ -143,6 +176,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
 .notification-btn:hover {
@@ -150,19 +185,21 @@
 }
 
 .notification-icon {
-  font-size: 18px;
-  color: #64748b;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .profile-picture {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #7539FF;
+  background-color: #7C3AED;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .profile-initial {

@@ -3,6 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 import logo from '../../assets/logo.png';
+import analyticsIcon from '../../assets/anaylictics.svg';
+import expensesIcon from '../../assets/expenses.svg';
+import userIcon from '../../assets/user.svg';
+import exitIcon from '../../assets/exit.svg';
+import notificationIcon from '../../assets/notification.png';
 import './AppLayout.css';
 
 const AppLayout = ({ children }) => {
@@ -37,7 +42,7 @@ const AppLayout = ({ children }) => {
                 className={`nav-link ${isActive('/analysis') ? 'active' : ''}`}
                 onClick={() => navigate('/app/analysis')}
               >
-                <span className="nav-icon">📊</span>
+                <img src={analyticsIcon} alt="Analytics" className="nav-icon" />
                 <span className="nav-text">Analysis</span>
               </button>
             </li>
@@ -46,8 +51,17 @@ const AppLayout = ({ children }) => {
                 className={`nav-link ${isActive('/expenses') ? 'active' : ''}`}
                 onClick={() => navigate('/app/expenses')}
               >
-                <span className="nav-icon">💰</span>
+                <img src={expensesIcon} alt="Expenses" className="nav-icon" />
                 <span className="nav-text">Expenses</span>
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${isActive('/users') ? 'active' : ''}`}
+                onClick={() => navigate('/app/users')}
+              >
+                <img src={userIcon} alt="Users" className="nav-icon" />
+                <span className="nav-text">Users</span>
               </button>
             </li>
             <li className="nav-item">
@@ -55,7 +69,7 @@ const AppLayout = ({ children }) => {
                 className="nav-link logout-link"
                 onClick={handleLogout}
               >
-                <span className="nav-icon">🚪</span>
+                <img src={exitIcon} alt="Logout" className="nav-icon" />
                 <span className="nav-text">Logout</span>
               </button>
             </li>
@@ -72,7 +86,7 @@ const AppLayout = ({ children }) => {
           </div>
           <div className="header-right">
             <button className="notification-btn" aria-label="Notifications">
-              <span className="notification-icon">🔔</span>
+              <img src={notificationIcon} alt="Notifications" className="notification-icon" />
             </button>
             <div className="profile-picture">
               <span className="profile-initial">U</span>

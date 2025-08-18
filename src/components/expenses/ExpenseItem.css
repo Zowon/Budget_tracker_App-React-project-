@@ -1,10 +1,10 @@
 .expense-item {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #F3F4F6;
   transition: background-color 0.2s ease;
 }
 
 .expense-item:hover {
-  background-color: #f8fafc;
+  background-color: #F9FAFB;
 }
 
 .expense-item:last-child {
@@ -41,14 +41,14 @@
 .progress-bar {
   flex: 1;
   height: 8px;
-  background-color: #e2e8f0;
+  background-color: #E5E7EB;
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: #7539FF;
+  background-color: #7C3AED;
   border-radius: 4px;
   transition: width 0.2s ease;
 }
@@ -123,11 +123,11 @@
 }
 
 .action-edit {
-  color: #7539FF;
+  color: #7C3AED;
 }
 
 .action-edit:hover {
-  background-color: rgba(117, 57, 255, 0.1);
+  background-color: rgba(124, 58, 237, 0.1);
 }
 
 .action-delete {

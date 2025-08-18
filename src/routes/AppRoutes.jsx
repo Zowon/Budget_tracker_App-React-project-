@@ -7,6 +7,8 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import ForgotPassword from '../pages/ForgotPassword';
 import Expenses from '../pages/Expenses';
+import Users from '../pages/Users';
+import Analysis from '../pages/Analysis';
 import Reports from '../pages/Reports';
 import TestPage from '../pages/TestPage';
 
@@ -40,10 +42,18 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/app/reports"
+          path="/app/users"
           element={
             <ProtectedRoute>
-              <Reports />
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/app/analysis"
+          element={
+            <ProtectedRoute>
+              <Analysis />
             </ProtectedRoute>
           }
         />

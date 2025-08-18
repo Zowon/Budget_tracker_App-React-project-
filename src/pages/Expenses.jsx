@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { format, addMonths, subMonths } from 'date-fns';
+import { format } from 'date-fns';
 import { selectUser } from '../features/auth/authSlice';
 import { 
-  selectExpensesByMonth, 
-  selectMonthlyTotal, 
-  selectIsOverBudget 
+  selectExpensesByMonth
 } from '../features/expenses/expensesSlice';
 import ExpenseList from '../components/expenses/ExpenseList';
 import ExpenseForm from '../components/forms/ExpenseForm';
 import ConfirmDeleteModal from '../components/modals/ConfirmDeleteModal';
 import Button from '../components/inputs/Button';
 import AppLayout from '../components/layout/AppLayout';
+import searchIcon from '../assets/Search.png';
+import calendarIcon from '../assets/calendar.png';
 import './expenses.css';
 
 const Expenses = () => {
@@ -36,15 +36,15 @@ const Expenses = () => {
     selectExpensesByMonth(state, user?.id, currentYear, currentMonth)
   );
 
-  // Get monthly total
-  const monthlyTotal = useSelector(state => 
-    selectMonthlyTotal(state, user?.id, currentYear, currentMonth)
-  );
+  // Get monthly total (commented out for now)
+  // const monthlyTotal = useSelector(state => 
+  //   selectMonthlyTotal(state, user?.id, currentYear, currentMonth)
+  // );
 
-  // Check if over budget
-  const isOverBudget = useSelector(state => 
-    selectIsOverBudget(state, user, currentYear, currentMonth)
-  );
+  // Check if over budget (commented out for now)
+  // const isOverBudget = useSelector(state => 
+  //   selectIsOverBudget(state, user, currentYear, currentMonth)
+  // );
 
   // Filter and sort expenses
   const filteredExpenses = expenses.filter(expense =>
@@ -70,8 +70,8 @@ const Expenses = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedExpenses = sortedExpenses.slice(startIndex, startIndex + itemsPerPage);
 
-  // Calculate remaining budget
-  const remainingBudget = (user?.budgetLimit || 0) - monthlyTotal;
+  // Calculate remaining budget (commented out for now)
+  // const remainingBudget = (user?.budgetLimit || 0) - monthlyTotal;
 
   // Handle edit expense
   const handleEdit = (expense) => {
@@ -157,25 +157,12 @@ const Expenses = () => {
   return (
     <AppLayout>
     <div className="expenses-page">
-        {/* Page Header */}
+        {/* Page Header with Controls */}
         <div className="expenses-header">
           <div className="header-left">
             <h1 className="page-title">Expenses</h1>
           </div>
-          <div className="header-right">
-            <Button
-              variant="primary"
-              onClick={() => setShowAddForm(true)}
-              className="add-expense-button"
-            >
-              Add Expenses
-            </Button>
-          </div>
-        </div>
-
-        {/* Filters and Controls */}
-        <div className="expenses-controls">
-          <div className="controls-left">
+          <div className="header-center">
             {/* Sort By */}
             <div className="sort-filter">
               <label htmlFor="sort-select" className="filter-label">Sort By</label>
@@ -210,12 +197,10 @@ const Expenses = () => {
                   className="date-input"
                   placeholder="dd/mm/yyyy"
                 />
-                <span className="date-icon">📅</span>
+                <img src={calendarIcon} alt="Calendar" className="date-icon" />
               </div>
             </div>
-          </div>
 
-          <div className="controls-right">
             {/* Search */}
             <div className="search-container">
               <input
@@ -225,8 +210,17 @@ const Expenses = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"
               />
-              <span className="search-icon">🔍</span>
+              <img src={searchIcon} alt="Search" className="search-icon" />
             </div>
+          </div>
+          <div className="header-right">
+            <Button
+              variant="primary"
+              onClick={() => setShowAddForm(true)}
+              className="add-expense-button"
+            >
+              Add Expenses
+            </Button>
           </div>
         </div>
 
