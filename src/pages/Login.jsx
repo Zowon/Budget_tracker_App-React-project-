@@ -5,6 +5,7 @@ import { login } from '../features/auth/authSlice';
 import AuthLayout from '../components/layout/AuthLayout';
 import FormField from '../components/inputs/FormField';
 import Button from '../components/inputs/Button';
+import Toast from '../components/ui/Toast';
 import loginImage from '../assets/login.png';
 import './login.css';
 
@@ -19,6 +20,7 @@ const Login = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [toast, setToast] = useState({ message: '', type: '', isVisible: false });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +55,16 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Show toast notification
+  const showToast = (message, type) => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  // Close toast
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -61,17 +73,21 @@ const Login = () => {
     }
 
     try {
-      const result = await dispatch(login({
+      await dispatch(login({
         email: formData.email,
         password: formData.password
       })).unwrap();
 
-      // The login thunk returns the user object directly, not a success property
-      if (result && result.id) {
+      // Show success toast and navigate
+      showToast('Login successful', 'success');
+      
+      // Navigate after a short delay to show the toast
+      setTimeout(() => {
         navigate('/app/expenses');
-      }
+      }, 1000);
     } catch (error) {
       console.error('Login failed:', error);
+      showToast(error.message || 'Invalid credentials', 'error');
     }
   };
 
@@ -145,8 +161,16 @@ const Login = () => {
           <Link to="/signup" className="signup-link__text">
             Sign Up
           </Link>
-    </div>
+        </div>
       </form>
+      
+      {/* Toast Notifications */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={closeToast}
+      />
     </AuthLayout>
   );
 };

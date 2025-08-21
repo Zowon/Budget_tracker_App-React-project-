@@ -33,11 +33,15 @@ export const signUp = createAsyncThunk(
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { getState }) => {
-    const { users } = getState();
+    const { users, auth } = getState();
     const passwordHash = await hashPassword(password);
     
-    // Find user by email
-    const user = users.users.find(u => u.email === email);
+    // First check in users store, then in auth registeredUsers as fallback
+    let user = users.users.find(u => u.email === email && u.passwordHash);
+    
+    if (!user && auth.registeredUsers) {
+      user = auth.registeredUsers.find(u => u.email === email);
+    }
     
     if (!user) {
       throw new Error('Invalid credentials');
@@ -57,25 +61,21 @@ export const login = createAsyncThunk(
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
   async ({ email }, { getState }) => {
-    const { auth } = getState();
+    const { users, auth } = getState();
     
-    // Check if user exists and email matches
-    if (auth.user && auth.user.email === email) {
+    // Check in users store first, then auth registeredUsers
+    let userExists = users.users.find(u => u.email === email);
+    
+    if (!userExists && auth.registeredUsers) {
+      userExists = auth.registeredUsers.find(u => u.email === email);
+    }
+    
+    if (userExists) {
       // Mock success - in real app would send email
-      return { success: true, message: 'Password reset link sent to your email' };
+      return { success: true, message: 'Reset link sent' };
     }
     
-    // If no user exists
-    if (!auth.user) {
-      throw new Error('No account found. Please sign up first.');
-    }
-    
-    // If user exists but email doesn't match
-    if (auth.user.email !== email) {
-      throw new Error('Email not found. Please check your email or sign up.');
-    }
-    
-    throw new Error('Email not found');
+    throw new Error('Account not found');
   }
 );
 
@@ -92,15 +92,21 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
+      // Only clear current user session, keep registeredUsers for future logins
       state.user = null;
       state.isAuthenticated = false;
       state.error = null;
+      // Do NOT clear registeredUsers - they should persist
     },
     clearError: (state) => {
       state.error = null;
     },
     addRegisteredUser: (state, action) => {
-      state.registeredUsers.push(action.payload);
+      // Avoid duplicates
+      const existingUser = state.registeredUsers.find(u => u.email === action.payload.email);
+      if (!existingUser) {
+        state.registeredUsers.push(action.payload);
+      }
     }
   },
   extraReducers: (builder) => {

@@ -9,7 +9,9 @@ const UserForm = ({ user, onClose, onSubmit }) => {
     lastName: '',
     email: '',
     phone: '',
-    role: 'User'
+    role: 'User',
+    password: '',
+    confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,7 +24,9 @@ const UserForm = ({ user, onClose, onSubmit }) => {
         lastName: user.lastName || '',
         email: user.email || '',
         phone: user.phone || '',
-        role: user.role || 'User'
+        role: user.role || 'User',
+        password: '',
+        confirmPassword: ''
       });
     }
   }, [user]);
@@ -62,12 +66,25 @@ const UserForm = ({ user, onClose, onSubmit }) => {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
-    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-\(\)]/g, ''))) {
+    } else if (!/^[+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-()]/g, ''))) {
       newErrors.phone = 'Please enter a valid phone number';
     }
 
     if (!formData.role) {
       newErrors.role = 'Role is required';
+    }
+
+    // Only validate password for new users
+    if (!user) {
+      if (!formData.password) {
+        newErrors.password = 'Password is required';
+      } else if (formData.password.length < 6) {
+        newErrors.password = 'Password must be at least 6 characters';
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
     }
 
     setErrors(newErrors);
@@ -193,6 +210,37 @@ const UserForm = ({ user, onClose, onSubmit }) => {
               <span className="error-message">{errors.role}</span>
             )}
           </div>
+
+          {/* Password fields - only show for new users */}
+          {!user && (
+            <>
+              <div className="form-group">
+                <Input
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  error={errors.password}
+                  placeholder="Enter password"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <Input
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  error={errors.confirmPassword}
+                  placeholder="Confirm password"
+                  required
+                />
+              </div>
+            </>
+          )}
 
           <div className="form-actions">
             <Button

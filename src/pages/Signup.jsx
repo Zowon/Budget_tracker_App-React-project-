@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { signUp } from '../features/auth/authSlice';
+import { addUserFromAuth } from '../features/users/usersSlice';
 import AuthLayout from '../components/layout/AuthLayout';
 import FormField from '../components/inputs/FormField';
 import Button from '../components/inputs/Button';
+import Toast from '../components/ui/Toast';
 import signupImage from '../assets/signup.png';
 import './signup.css';
 
@@ -17,12 +19,14 @@ const Signup = () => {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
+    role: 'User',
     password: '',
-    confirmPassword: '',
-    budgetLimit: ''
+    confirmPassword: ''
   });
 
   const [errors, setErrors] = useState({});
+  const [toast, setToast] = useState({ message: '', type: '', isVisible: false });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,12 +71,28 @@ const Signup = () => {
       newErrors.confirmPassword = 'Passwords do not match';
     }
 
-    if (!formData.budgetLimit || parseFloat(formData.budgetLimit) <= 0) {
-      newErrors.budgetLimit = 'Please enter a valid budget limit';
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^[+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-()]/g, ''))) {
+      newErrors.phone = 'Please enter a valid phone number';
+    }
+
+    if (!formData.role) {
+      newErrors.role = 'Role is required';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Show toast notification
+  const showToast = (message, type) => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  // Close toast
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
   };
 
   const handleSubmit = async (e) => {
@@ -84,18 +104,26 @@ const Signup = () => {
 
     try {
       const result = await dispatch(signUp({
-        name: `${formData.firstName} ${formData.lastName}`,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
-        password: formData.password,
-        budgetLimit: parseFloat(formData.budgetLimit)
+        phone: formData.phone,
+        role: formData.role,
+        password: formData.password
       })).unwrap();
 
-      // The signUp thunk returns the user object directly, not a success property
-      if (result && result.id) {
+      // Add user to users table
+      dispatch(addUserFromAuth(result));
+      
+      showToast('User created successfully', 'success');
+      
+      // Navigate after a short delay to show the toast
+      setTimeout(() => {
         navigate('/app/expenses');
-      }
+      }, 1500);
     } catch (error) {
       console.error('Signup failed:', error);
+      showToast(error.message || 'Signup failed', 'error');
     }
   };
 
@@ -180,17 +208,36 @@ const Signup = () => {
         />
 
         <FormField
-          label="Monthly Budget Limit"
-          type="number"
-          name="budgetLimit"
-          placeholder="Enter Amount"
-          value={formData.budgetLimit}
+          label="Phone Number"
+          type="tel"
+          name="phone"
+          placeholder="Enter phone number"
+          value={formData.phone}
           onChange={handleChange}
-          error={errors.budgetLimit}
+          error={errors.phone}
           required
-          step="0.01"
-          min="0"
         />
+
+        <div className="form-group">
+          <label htmlFor="role" className="form-label">
+            Role <span className="required">*</span>
+          </label>
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className={`form-select ${errors.role ? 'error' : ''}`}
+            required
+          >
+            <option value="User">User</option>
+            <option value="Manager">Manager</option>
+            <option value="Admin">Admin</option>
+          </select>
+          {errors.role && (
+            <span className="error-message">{errors.role}</span>
+          )}
+        </div>
 
         <Button
           type="submit"
@@ -206,8 +253,16 @@ const Signup = () => {
           <Link to="/login" className="login-link__text">
             Log in
           </Link>
-    </div>
+        </div>
       </form>
+      
+      {/* Toast Notifications */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={closeToast}
+      />
     </AuthLayout>
   );
 };

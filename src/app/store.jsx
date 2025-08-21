@@ -10,7 +10,7 @@ import uiReducer from '../features/ui/uiSlice';
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['user', 'isAuthenticated']
+  whitelist: ['user', 'isAuthenticated', 'registeredUsers']
 };
 
 const expensesPersistConfig = {

@@ -49,13 +49,18 @@ const usersSlice = createSlice({
           state.users.push(action.payload);
         }
       },
-      prepare: (userData) => ({
-        payload: {
-          id: nanoid(),
-          ...userData,
-          createdAt: new Date().toISOString()
-        }
-      })
+      prepare: (userData) => {
+        const { password, ...userDataWithoutPassword } = userData;
+        return {
+          payload: {
+            id: nanoid(),
+            ...userDataWithoutPassword,
+            // Store password hash if password is provided
+            ...(password && { passwordHash: password }), // Will be hashed in component
+            createdAt: new Date().toISOString()
+          }
+        };
+      }
     },
     addUserFromAuth: (state, action) => {
       // Add user from auth signup without duplicate check

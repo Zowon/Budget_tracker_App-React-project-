@@ -5,6 +5,7 @@ import { forgotPassword } from '../features/auth/authSlice';
 import AuthLayout from '../components/layout/AuthLayout';
 import FormField from '../components/inputs/FormField';
 import Button from '../components/inputs/Button';
+import Toast from '../components/ui/Toast';
 import resetImage from '../assets/reset.png';
 import './forgot.css';
 
@@ -19,6 +20,7 @@ const ForgotPassword = () => {
 
   const [errors, setErrors] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
+  const [toast, setToast] = useState({ message: '', type: '', isVisible: false });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +51,16 @@ const ForgotPassword = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Show toast notification
+  const showToast = (message, type) => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  // Close toast
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -58,9 +70,11 @@ const ForgotPassword = () => {
 
     try {
       await dispatch(forgotPassword({ email: formData.email })).unwrap();
+      showToast('Reset link sent', 'success');
       setIsSuccess(true);
     } catch (error) {
       console.error('Forgot password failed:', error);
+      showToast(error.message || 'Account not found', 'error');
     }
   };
 
@@ -153,8 +167,16 @@ const ForgotPassword = () => {
           <Link to="/signup" className="signup-link__text">
             Sign Up
           </Link>
-    </div>
+        </div>
       </form>
+      
+      {/* Toast Notifications */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={closeToast}
+      />
     </AuthLayout>
   );
 };

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllUsers, addUser, updateUser, deleteUser } from '../features/users/usersSlice';
+import { hashPassword } from '../utils/crypto.jsx';
 import AppLayout from '../components/layout/AppLayout';
 import Button from '../components/inputs/Button';
 import UserForm from '../components/forms/UserForm';
 import DeleteConfirmModal from '../components/modals/DeleteConfirmModal';
+import Toast from '../components/ui/Toast';
 import searchIcon from '../assets/Search.png';
 import './users.css';
 
@@ -18,6 +20,7 @@ const Users = () => {
   const [deletingUser, setDeletingUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [toast, setToast] = useState({ message: '', type: '', isVisible: false });
   const itemsPerPage = 8;
 
   // Filter users based on search
@@ -45,15 +48,49 @@ const Users = () => {
     setShowDeleteModal(true);
   };
 
+  // Show toast notification
+  const showToast = (message, type) => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  // Close toast
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
+  };
+
   // Handle user form submit
-  const handleUserSubmit = (userData) => {
-    if (editingUser) {
-      dispatch(updateUser({ id: editingUser.id, ...userData }));
-      setShowEditForm(false);
-      setEditingUser(null);
-    } else {
-      dispatch(addUser(userData));
-      setShowAddForm(false);
+  const handleUserSubmit = async (userData) => {
+    try {
+      if (editingUser) {
+        dispatch(updateUser({ id: editingUser.id, ...userData }));
+        setShowEditForm(false);
+        setEditingUser(null);
+        showToast('User updated successfully', 'success');
+      } else {
+        // Check for duplicate email
+        const existingUser = users.find(user => user.email === userData.email);
+        if (existingUser) {
+          showToast('Email already exists', 'error');
+          return;
+        }
+        
+        // For new users, hash the password before storing
+        if (userData.password) {
+          const passwordHash = await hashPassword(userData.password);
+          const userWithHashedPassword = {
+            ...userData,
+            passwordHash,
+            password: undefined // Remove plain password
+          };
+          dispatch(addUser(userWithHashedPassword));
+        } else {
+          dispatch(addUser(userData));
+        }
+        setShowAddForm(false);
+        showToast('User created successfully', 'success');
+      }
+    } catch {
+      showToast('Operation failed', 'error');
     }
   };
 
@@ -63,6 +100,7 @@ const Users = () => {
       dispatch(deleteUser(deletingUser.id));
       setShowDeleteModal(false);
       setDeletingUser(null);
+      showToast('User deleted successfully', 'success');
     }
   };
 
@@ -312,13 +350,21 @@ const Users = () => {
         )}
 
         {showDeleteModal && deletingUser && (
-          <ConfirmDeleteModal
+          <DeleteConfirmModal
             title="Delete User"
             message={`Are you sure you want to delete ${deletingUser.firstName} ${deletingUser.lastName}? This action cannot be undone.`}
             onConfirm={handleDeleteConfirm}
-            onClose={closeDeleteModal}
+            onCancel={closeDeleteModal}
           />
         )}
+
+        {/* Toast Notifications */}
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          isVisible={toast.isVisible}
+          onClose={closeToast}
+        />
       </div>
     </AppLayout>
   );
