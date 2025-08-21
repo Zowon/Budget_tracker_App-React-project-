@@ -4,15 +4,28 @@ import { hashPassword } from '../../utils/crypto.jsx';
 // Async thunk for signup
 export const signUp = createAsyncThunk(
   'auth/signUp',
-  async ({ email, name, password, budgetLimit }) => {
+  async ({ firstName, lastName, email, phone, role, password }, { getState }) => {
+    const { users } = getState();
+    
+    // Check if email already exists
+    const existingUser = users.users.find(user => user.email === email);
+    if (existingUser) {
+      throw new Error('Email already exists');
+    }
+    
     const passwordHash = await hashPassword(password);
-    return {
+    const newUser = {
       id: Date.now().toString(),
+      firstName,
+      lastName,
       email,
-      name,
-      budgetLimit: parseFloat(budgetLimit),
-      passwordHash
+      phone,
+      role,
+      passwordHash,
+      createdAt: new Date().toISOString()
     };
+    
+    return newUser;
   }
 );
 
@@ -20,29 +33,23 @@ export const signUp = createAsyncThunk(
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { getState }) => {
-    const { auth } = getState();
+    const { users } = getState();
     const passwordHash = await hashPassword(password);
     
-    // Check if user exists and credentials match
-    if (auth.user && auth.user.email === email && auth.user.passwordHash === passwordHash) {
-      return auth.user;
+    // Find user by email
+    const user = users.users.find(u => u.email === email);
+    
+    if (!user) {
+      throw new Error('Invalid credentials');
     }
     
-    // If no user exists, this is the first login - create a mock user
-    if (!auth.user) {
-      throw new Error('No account found. Please sign up first.');
+    if (user.passwordHash !== passwordHash) {
+      throw new Error('Invalid credentials');
     }
     
-    // If user exists but credentials don't match
-    if (auth.user.email !== email) {
-      throw new Error('Email not found. Please check your email or sign up.');
-    }
-    
-    if (auth.user.passwordHash !== passwordHash) {
-      throw new Error('Invalid password. Please check your password.');
-    }
-    
-    throw new Error('Invalid credentials');
+    // Return user without password hash
+    const { passwordHash: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 );
 
@@ -76,7 +83,8 @@ const initialState = {
   user: null,
   isAuthenticated: false,
   loading: false,
-  error: null
+  error: null,
+  registeredUsers: [] // Keep track of registered users for auth
 };
 
 const authSlice = createSlice({
@@ -90,6 +98,9 @@ const authSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
+    },
+    addRegisteredUser: (state, action) => {
+      state.registeredUsers.push(action.payload);
     }
   },
   extraReducers: (builder) => {
@@ -101,8 +112,10 @@ const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        const { passwordHash: _, ...userWithoutPassword } = action.payload;
+        state.user = userWithoutPassword;
         state.isAuthenticated = true;
+        state.registeredUsers.push(action.payload);
       })
       .addCase(signUp.rejected, (state, action) => {
         state.loading = false;
@@ -137,7 +150,7 @@ const authSlice = createSlice({
   }
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, addRegisteredUser } = authSlice.actions;
 
 // Selectors
 export const selectUser = (state) => state.auth.user;

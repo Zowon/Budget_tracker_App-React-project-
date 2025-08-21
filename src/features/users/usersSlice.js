@@ -43,14 +43,27 @@ const usersSlice = createSlice({
   reducers: {
     addUser: {
       reducer: (state, action) => {
-        state.users.push(action.payload);
+        // Check for duplicate email
+        const existingUser = state.users.find(user => user.email === action.payload.email);
+        if (!existingUser) {
+          state.users.push(action.payload);
+        }
       },
       prepare: (userData) => ({
         payload: {
           id: nanoid(),
-          ...userData
+          ...userData,
+          createdAt: new Date().toISOString()
         }
       })
+    },
+    addUserFromAuth: (state, action) => {
+      // Add user from auth signup without duplicate check
+      const existingUser = state.users.find(user => user.email === action.payload.email);
+      if (!existingUser) {
+        const { passwordHash: _, ...userWithoutPassword } = action.payload;
+        state.users.push(userWithoutPassword);
+      }
     },
     updateUser: (state, action) => {
       const { id, ...updates } = action.payload;
@@ -65,11 +78,13 @@ const usersSlice = createSlice({
   }
 });
 
-export const { addUser, updateUser, deleteUser } = usersSlice.actions;
+export const { addUser, addUserFromAuth, updateUser, deleteUser } = usersSlice.actions;
 
 // Selectors
 export const selectAllUsers = (state) => state.users.users;
 export const selectUserById = (state, userId) => 
   state.users.users.find(user => user.id === userId);
+export const selectUserByEmail = (state, email) => 
+  state.users.users.find(user => user.email === email);
 
 export default usersSlice.reducer;
