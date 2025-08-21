@@ -20,12 +20,6 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
 
   const progressPercentage = getProgressPercentage();
 
-  // Generate mock user name from expense ID
-  const getUserName = (expenseId) => {
-    const users = ['guy-hawkins', 'wade-warren', 'jenny-wilson', 'robert-fox', 'williamson', 'ralph-edwards', 'marvin-mckinney'];
-    const index = expenseId.charCodeAt(0) % users.length;
-    return users[index];
-  };
 
   return (
     <tr className="expense-item">
@@ -48,9 +42,6 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
       </td>
       <td className="expense-date">
         <span className="date-text">{formatDate(expense.dateISO)}</span>
-      </td>
-      <td className="expense-user">
-        <span className="user-text">{getUserName(expense.id)}</span>
       </td>
       <td className="expense-actions">
         <div className="action-buttons">

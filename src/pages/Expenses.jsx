@@ -10,6 +10,7 @@ import ExpenseForm from '../components/forms/ExpenseForm';
 import ConfirmDeleteModal from '../components/modals/ConfirmDeleteModal';
 import Button from '../components/inputs/Button';
 import AppLayout from '../components/layout/AppLayout';
+import Toast from '../components/ui/Toast';
 import searchIcon from '../assets/Search.png';
 import calendarIcon from '../assets/calendar.png';
 import './expenses.css';
@@ -25,6 +26,7 @@ const Expenses = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const [toast, setToast] = useState({ message: '', type: '', isVisible: false });
   const itemsPerPage = 8;
 
   // Get current month/year for selectors
@@ -85,8 +87,21 @@ const Expenses = () => {
     setShowDeleteModal(true);
   };
 
+  // Show toast notification
+  const showToast = (message, type) => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  // Close toast
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
+  };
+
   // Close modals
-  const closeAddForm = () => setShowAddForm(false);
+  const closeAddForm = () => {
+    setShowAddForm(false);
+    showToast('Expense added successfully', 'success');
+  };
   const closeEditForm = () => {
     setShowEditForm(false);
     setEditingExpense(null);
@@ -94,6 +109,7 @@ const Expenses = () => {
   const closeDeleteModal = () => {
     setShowDeleteModal(false);
     setDeletingExpense(null);
+    showToast('Expense deleted successfully', 'success');
   };
 
   // Format date for input
@@ -296,6 +312,14 @@ const Expenses = () => {
             onClose={closeDeleteModal}
           />
         )}
+
+        {/* Toast Notifications */}
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          isVisible={toast.isVisible}
+          onClose={closeToast}
+        />
     </div>
     </AppLayout>
   );

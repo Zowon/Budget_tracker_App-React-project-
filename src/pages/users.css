@@ -14,14 +14,18 @@
   padding: 16px 24px;
   border-radius: 8px;
   border: 1px solid #E5E7EB;
+  flex-wrap: wrap;
+  gap: 16px;
+  min-height: 40px;
 }
 
 .header-center {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 24px;
   flex: 1;
   justify-content: center;
+  min-height: 40px;
 }
 
 .page-title {
@@ -75,21 +79,25 @@
 }
 
 .search-input {
-  padding: 8px 12px 8px 36px;
+  width: 200px;
+  height: 40px;
+  padding: 0 40px 0 12px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
   font-size: 14px;
   background-color: white;
-  color: #374151;
-  width: 300px;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  line-height: 1;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #7C3AED;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-  width: 350px;
+  transform: scale(1.02);
+  width: 250px;
 }
 
 .search-icon {

@@ -24,7 +24,6 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
             <th className="header-progress">Total Expenditure</th>
             <th className="header-amount">Price(PKR)</th>
             <th className="header-date">Date</th>
-            <th className="header-user">User</th>
             <th className="header-actions">Actions</th>
           </tr>
         </thead>

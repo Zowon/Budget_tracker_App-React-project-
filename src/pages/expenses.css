@@ -52,8 +52,36 @@
 }
 
 @media (max-width: 768px) {
+  .expenses-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .header-center {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .sort-filter,
+  .date-filter,
+  .search-container {
+    width: 100%;
+  }
+  
+  .search-input,
+  .sort-select,
+  .date-input {
+    width: 100%;
+  }
+  
+  .search-input:focus {
+    width: 100%;
+  }
+  
   .add-expense-button {
-    width: auto;
+    width: 100%;
     min-width: 120px;
     padding: 8px 16px;
   }
@@ -65,6 +93,7 @@
   gap: 24px;
   flex: 1;
   justify-content: center;
+  min-height: 40px;
 }
 
 /* Sort Filter */
@@ -83,20 +112,29 @@
 }
 
 .sort-select {
-  padding: 8px 12px;
+  height: 32px;
+  padding: 0 12px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
-  font-size: 14px;
   background-color: white;
+  font-size: 14px;
   color: #374151;
-  min-width: 120px;
   cursor: pointer;
+  min-width: 120px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
 }
 
 .sort-select:focus {
   outline: none;
   border-color: #7C3AED;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  transform: scale(1.05);
+}
+
+.sort-select:active {
+  transform: scale(1.02);
 }
 
 /* Date Filter */
@@ -113,20 +151,28 @@
 }
 
 .date-input {
-  padding: 8px 12px 8px 36px;
+  width: 140px;
+  height: 32px;
+  padding: 0 40px 0 12px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
   font-size: 14px;
   background-color: white;
-  color: #374151;
-  width: 140px;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  line-height: 1;
 }
 
 .date-input:focus {
   outline: none;
   border-color: #7C3AED;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  transform: scale(1.05);
+}
+
+.date-input:active {
+  transform: scale(1.02);
 }
 
 .date-icon {
@@ -146,21 +192,36 @@
 }
 
 .search-input {
-  padding: 8px 12px 8px 36px;
+  width: 192px;
+  height: 32px;
+  padding: 0 40px 0 12px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
   font-size: 14px;
   background-color: white;
-  color: #374151;
-  width: 200px;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.search-input::placeholder {
+  color: #9CA3AF;
+  vertical-align: middle;
+  line-height: 32px;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #7C3AED;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-  width: 250px;
+  transform: scale(1.05);
+  width: 220px;
+}
+
+.search-input:active {
+  transform: scale(1.02);
 }
 
 .search-icon {
