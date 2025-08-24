@@ -18,10 +18,11 @@
 .form-field__input-wrapper {
   position: relative;
   width: 100%;
+  max-width: 594px;
 }
 
 .form-field__input {
-  width: 594px;
+  width: 100%;
   height: 48px;
   padding: 12px 48px 12px 16px;
   border: 1px solid var(--border-color);
@@ -86,6 +87,7 @@
   
   .form-field__input {
     width: 100%;
+    max-width: 594px;
     padding: 12px 48px 12px 16px;
     height: 48px;
   }

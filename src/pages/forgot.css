@@ -16,7 +16,8 @@
 
 .reset-button {
   margin-bottom: var(--spacing-xl);
-  width: 594px;
+  width: 100%;
+  max-width: 594px;
   height: 48px;
 }
 
@@ -24,7 +25,8 @@
   text-align: center;
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
-  width: 594px;
+  width: 100%;
+  max-width: 594px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +50,8 @@
 
 .back-to-login-button {
   margin-bottom: var(--spacing-lg);
-  width: 594px;
+  width: 100%;
+  max-width: 594px;
   height: 48px;
 }
 
