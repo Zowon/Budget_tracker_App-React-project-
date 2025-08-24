@@ -12,7 +12,7 @@ import './login.css';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -107,18 +107,6 @@ const Login = () => {
       }
     >
       <form onSubmit={handleSubmit} className="login-form">
-        {error && (
-          <div style={{ 
-            color: 'red', 
-            marginBottom: '1rem', 
-            padding: '0.5rem', 
-            backgroundColor: '#fee', 
-            border: '1px solid #fcc',
-            borderRadius: '4px'
-          }}>
-            {error}
-          </div>
-        )}
         
         <FormField
           label="Email"
