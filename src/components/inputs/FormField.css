@@ -17,7 +17,7 @@
 
 .form-field__input-wrapper {
   position: relative;
-  width: 594px;
+  width: 100%;
 }
 
 .form-field__input {

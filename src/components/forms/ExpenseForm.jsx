@@ -92,19 +92,19 @@ const ExpenseForm = ({
       }));
     }
 
-    onClose();
+    onClose(true); // Pass true to indicate successful submission
   };
 
   return (
     <div className="expense-form-modal">
-      <div className="expense-form-overlay" onClick={onClose}></div>
+      <div className="expense-form-overlay" onClick={() => onClose()}></div>
       <div className="expense-form-container">
         <div className="expense-form-header">
           <h2>{isEditing ? 'Edit Expense' : 'Add Expense'}</h2>
           <button 
             type="button" 
             className="expense-form-close" 
-            onClick={onClose}
+            onClick={() => onClose()}
             aria-label="Close"
           >
             ×
@@ -150,7 +150,7 @@ const ExpenseForm = ({
             <Button
               type="button"
               variant="secondary"
-              onClick={onClose}
+              onClick={() => onClose()}
               className="expense-form-cancel"
             >
               Cancel

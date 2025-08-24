@@ -7,7 +7,6 @@ import Button from '../components/inputs/Button';
 import UserForm from '../components/forms/UserForm';
 import DeleteConfirmModal from '../components/modals/DeleteConfirmModal';
 import Toast from '../components/ui/Toast';
-import searchIcon from '../assets/Search.png';
 import './users.css';
 
 const Users = () => {
@@ -186,7 +185,6 @@ const Users = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"
               />
-              <img src={searchIcon} alt="Search" className="search-icon" />
             </div>
           </div>
           <div className="header-right">

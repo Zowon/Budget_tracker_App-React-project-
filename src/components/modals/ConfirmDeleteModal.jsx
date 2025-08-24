@@ -9,21 +9,21 @@ const ConfirmDeleteModal = ({ expense, onClose }) => {
 
   const handleDelete = () => {
     dispatch(removeExpense({ id: expense.id }));
-    onClose();
+    onClose(true); // Pass true to indicate successful deletion
   };
 
   if (!expense) return null;
 
   return (
     <div className="confirm-delete-modal">
-      <div className="confirm-delete-overlay" onClick={onClose}></div>
+      <div className="confirm-delete-overlay" onClick={() => onClose()}></div>
       <div className="confirm-delete-container">
         <div className="confirm-delete-header">
           <h2>Delete Expense</h2>
           <button 
             type="button" 
             className="confirm-delete-close" 
-            onClick={onClose}
+            onClick={() => onClose()}
             aria-label="Close"
           >
             ×
@@ -55,7 +55,7 @@ const ConfirmDeleteModal = ({ expense, onClose }) => {
           <Button
             type="button"
             variant="secondary"
-            onClick={onClose}
+            onClick={() => onClose()}
             className="confirm-delete-cancel"
           >
             Cancel

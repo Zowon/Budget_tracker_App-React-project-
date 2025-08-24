@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import { selectUser } from '../features/auth/authSlice';
 import { 
-  selectExpensesByMonth
+  selectUserExpenses
 } from '../features/expenses/expensesSlice';
 import ExpenseList from '../components/expenses/ExpenseList';
 import ExpenseForm from '../components/forms/ExpenseForm';
@@ -11,7 +11,6 @@ import ConfirmDeleteModal from '../components/modals/ConfirmDeleteModal';
 import Button from '../components/inputs/Button';
 import AppLayout from '../components/layout/AppLayout';
 import Toast from '../components/ui/Toast';
-import searchIcon from '../assets/Search.png';
 import calendarIcon from '../assets/calendar.png';
 import './expenses.css';
 
@@ -29,13 +28,9 @@ const Expenses = () => {
   const [toast, setToast] = useState({ message: '', type: '', isVisible: false });
   const itemsPerPage = 8;
 
-  // Get current month/year for selectors
-  const currentYear = selectedDate.getFullYear();
-  const currentMonth = selectedDate.getMonth() + 1; // 1-indexed for selector
-
-  // Get expenses for current month
-  const expenses = useSelector(state => 
-    selectExpensesByMonth(state, user?.id, currentYear, currentMonth)
+  // Get all user expenses
+  const allUserExpenses = useSelector(state => 
+    selectUserExpenses(state, user?.id)
   );
 
   // Get monthly total (commented out for now)
@@ -48,18 +43,18 @@ const Expenses = () => {
   //   selectIsOverBudget(state, user, currentYear, currentMonth)
   // );
 
-  // Filter expenses by search term and date visibility
-  const filteredExpenses = expenses.filter(expense => {
+  // Filter expenses by search term and date (show all expenses up to selected date)
+  const filteredExpenses = allUserExpenses.filter(expense => {
     // Filter by search term
     const matchesSearch = expense.name.toLowerCase().includes(searchTerm.toLowerCase());
     
-    // Check if expense should be visible based on date
+    // Check if expense should be visible based on selected date
     const expenseDate = new Date(expense.dateISO);
-    const today = new Date();
-    today.setHours(23, 59, 59, 999); // End of today
+    const selectedEndDate = new Date(selectedDate);
+    selectedEndDate.setHours(23, 59, 59, 999); // End of selected date
     
-    // Show expense if it's today or in the future (until end date)
-    const isVisible = expenseDate <= today;
+    // Show expense if it's on or before the selected date
+    const isVisible = expenseDate <= selectedEndDate;
     
     return matchesSearch && isVisible;
   });
@@ -109,18 +104,25 @@ const Expenses = () => {
   };
 
   // Close modals
-  const closeAddForm = () => {
+  const closeAddForm = (wasSuccessful = false) => {
     setShowAddForm(false);
-    showToast('Expense added successfully', 'success');
+    if (wasSuccessful === true) {
+      showToast('Expense added successfully', 'success');
+    }
   };
-  const closeEditForm = () => {
+  const closeEditForm = (wasSuccessful = false) => {
     setShowEditForm(false);
     setEditingExpense(null);
+    if (wasSuccessful === true) {
+      showToast('Expense updated successfully', 'success');
+    }
   };
-  const closeDeleteModal = () => {
+  const closeDeleteModal = (wasSuccessful = false) => {
     setShowDeleteModal(false);
     setDeletingExpense(null);
-    showToast('Expense deleted successfully', 'success');
+    if (wasSuccessful === true) {
+      showToast('Expense deleted successfully', 'success');
+    }
   };
 
   // Format date for input
@@ -237,7 +239,6 @@ const Expenses = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"
               />
-              <img src={searchIcon} alt="Search" className="search-icon" />
             </div>
           </div>
           <div className="header-right">
@@ -262,12 +263,6 @@ const Expenses = () => {
 
         {/* Pagination */}
         <div className="pagination-section">
-          <div className="pagination-info">
-            <span className="pagination-text">
-              Showing {startIndex + 1} / {sortedExpenses.length}
-            </span>
-          </div>
-          
           {totalPages > 1 && (
             <div className="pagination-controls">
               <button

@@ -8,12 +8,13 @@
 .expenses-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 24px;
   background-color: #F9FAFB;
   padding: 16px 24px;
   border-radius: 8px;
   border: 1px solid #E5E7EB;
+  min-height: 80px;
 } 
 
 .page-title {
@@ -21,6 +22,7 @@
   font-weight: 600;
   color: #1e293b;
   margin: 0;
+  line-height: 1.2;
 }
 
 .add-expense-button {
@@ -40,6 +42,7 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  align-self: flex-end;
 }
 
 .add-expense-button:hover {
@@ -87,13 +90,26 @@
   }
 }
 
+.header-left {
+  display: flex;
+  align-items: flex-end;
+  min-height: 56px;
+}
+
+.header-right {
+  display: flex;
+  align-items: flex-end;
+  min-height: 56px;
+}
+
 .header-center {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 24px;
   flex: 1;
   justify-content: center;
-  min-height: 40px;
+  min-height: 56px;
+  margin-right: 16px;
 }
 
 /* Sort Filter */
@@ -112,7 +128,7 @@
 }
 
 .sort-select {
-  height: 32px;
+  height: 40px;
   padding: 0 12px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
@@ -152,8 +168,8 @@
 
 .date-input {
   width: 140px;
-  height: 32px;
-  padding: 0 40px 0 12px;
+  height: 40px;
+  padding: 0 12px 0 36px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
   font-size: 14px;
@@ -178,6 +194,8 @@
 .date-icon {
   position: absolute;
   left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 16px;
   height: 16px;
   pointer-events: none;
@@ -193,8 +211,8 @@
 
 .search-input {
   width: 192px;
-  height: 32px;
-  padding: 0 40px 0 12px;
+  height: 40px;
+  padding: 0 12px;
   border: 1px solid #D1D5DB;
   border-radius: 6px;
   font-size: 14px;
@@ -209,7 +227,7 @@
 .search-input::placeholder {
   color: #9CA3AF;
   vertical-align: middle;
-  line-height: 32px;
+  line-height: 40px;
 }
 
 .search-input:focus {
@@ -224,14 +242,6 @@
   transform: scale(1.02);
 }
 
-.search-icon {
-  position: absolute;
-  left: 12px;
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-  opacity: 0.6;
-}
 
 /* Content */
 .expenses-content {
