@@ -13,44 +13,40 @@ const Analysis = () => {
   // Get all expenses from Redux store
   const allExpenses = useSelector(state => state.expenses.expenses);
   
-  // Generate chart data for 12 months
+  // Generate chart data based on selected period
   const expensesData = useMemo(() => {
     const data = [];
     const currentDate = new Date();
+    const monthsToShow = parseInt(selectedPeriod);
     
-    // Check if user has any expenses
-    const userExpenses = allExpenses.filter(expense => expense.userId === user?.id);
-    const hasExpenses = userExpenses.length > 0;
-    
-    // Generate data for 12 months
-    for (let i = 11; i >= 0; i--) {
+    // Generate data for selected period
+    for (let i = monthsToShow - 1; i >= 0; i--) {
       const date = subMonths(currentDate, i);
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
       
       // Filter expenses for this specific month and user
       const monthExpenses = allExpenses.filter(expense => {
+        if (!expense.userId || expense.userId !== user?.id) return false;
+        
         const expenseDate = new Date(expense.dateISO);
-        return expense.userId === user?.id &&
-               expenseDate.getFullYear() === year &&
+        return expenseDate.getFullYear() === year &&
                expenseDate.getMonth() + 1 === month;
       });
       
-      const totalExpenses = monthExpenses.reduce((sum, expense) => sum + expense.amount, 0);
-      
-      // For new users with no data, show flat line at 0
-      // For users with data, show actual expenses or 0 for months without expenses
-      const value = hasExpenses ? totalExpenses : 0;
+      const totalExpenses = monthExpenses.reduce((sum, expense) => {
+        return sum + (parseFloat(expense.amount) || 0);
+      }, 0);
       
       data.push({
         month: format(date, 'MMM'),
-        expenses: value,
-        value: value
+        expenses: totalExpenses,
+        value: totalExpenses
       });
     }
     
     return data;
-  }, [allExpenses, user?.id]);
+  }, [allExpenses, user?.id, selectedPeriod]);
   
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -61,7 +57,7 @@ const Analysis = () => {
           <p className="tooltip-label">{label}</p>
           <p className="tooltip-expenses">
             <span className="tooltip-color expenses"></span>
-            Value: {data.value.toFixed(1)}
+            Value: {data.value.toLocaleString()}
           </p>
         </div>
       );
@@ -126,7 +122,7 @@ const Analysis = () => {
                   fontSize={12}
                   axisLine={false}
                   tickLine={false}
-                  domain={[0, 100]}
+                  domain={[0, 'dataMax + 100']}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Line 
