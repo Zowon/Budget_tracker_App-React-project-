@@ -13,12 +13,16 @@ const Analysis = () => {
   // Get all expenses from Redux store
   const allExpenses = useSelector(state => state.expenses.expenses);
   
-  // Generate chart data for 12 months (matching the screenshot)
+  // Generate chart data for 12 months
   const expensesData = useMemo(() => {
     const data = [];
     const currentDate = new Date();
     
-    // Generate data for 12 months to match the screenshot
+    // Check if user has any expenses
+    const userExpenses = allExpenses.filter(expense => expense.userId === user?.id);
+    const hasExpenses = userExpenses.length > 0;
+    
+    // Generate data for 12 months
     for (let i = 11; i >= 0; i--) {
       const date = subMonths(currentDate, i);
       const year = date.getFullYear();
@@ -33,13 +37,15 @@ const Analysis = () => {
       });
       
       const totalExpenses = monthExpenses.reduce((sum, expense) => sum + expense.amount, 0);
-      // Generate realistic looking data similar to the screenshot
-      const mockExpenses = totalExpenses || (Math.random() * 60 + 20); // Random between 20-80
+      
+      // For new users with no data, show flat line at 0
+      // For users with data, show actual expenses or 0 for months without expenses
+      const value = hasExpenses ? totalExpenses : 0;
       
       data.push({
         month: format(date, 'MMM'),
-        expenses: mockExpenses,
-        value: mockExpenses
+        expenses: value,
+        value: value
       });
     }
     

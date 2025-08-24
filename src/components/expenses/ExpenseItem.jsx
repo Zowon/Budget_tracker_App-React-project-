@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import './ExpenseItem.css';
 
@@ -11,14 +12,16 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
     return amount.toLocaleString();
   };
 
-  // Calculate progress percentage (mock data for now)
-  const getProgressPercentage = () => {
-    // This would typically be calculated based on budget vs spent
-    // For now, using a random percentage for demonstration
-    return Math.floor(Math.random() * 100) + 1;
-  };
-
-  const progressPercentage = getProgressPercentage();
+  // Get user's budget from Redux store
+  const user = useSelector(state => state.auth.user);
+  const userBudget = user?.budget || 10000; // Default budget if not set
+  
+  // Calculate progress percentage based on actual data
+  const progressPercentage = useMemo(() => {
+    // Calculate percentage of budget used by this expense
+    const percentage = Math.min((expense.amount / userBudget) * 100, 100);
+    return Math.round(percentage);
+  }, [expense.amount, userBudget]);
 
 
   return (

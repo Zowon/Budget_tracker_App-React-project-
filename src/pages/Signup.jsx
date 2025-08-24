@@ -35,12 +35,17 @@ const Signup = () => {
       [name]: value
     }));
     
-    // Clear error when user starts typing
+    // Clear field error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
       }));
+    }
+    
+    // Hide toast error when user starts typing
+    if (toast.isVisible && toast.type === 'error') {
+      closeToast();
     }
   };
 

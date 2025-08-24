@@ -48,10 +48,21 @@ const Expenses = () => {
   //   selectIsOverBudget(state, user, currentYear, currentMonth)
   // );
 
-  // Filter and sort expenses
-  const filteredExpenses = expenses.filter(expense =>
-    expense.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter expenses by search term and date visibility
+  const filteredExpenses = expenses.filter(expense => {
+    // Filter by search term
+    const matchesSearch = expense.name.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    // Check if expense should be visible based on date
+    const expenseDate = new Date(expense.dateISO);
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // End of today
+    
+    // Show expense if it's today or in the future (until end date)
+    const isVisible = expenseDate <= today;
+    
+    return matchesSearch && isVisible;
+  });
 
   // Sort expenses
   const sortedExpenses = [...filteredExpenses].sort((a, b) => {

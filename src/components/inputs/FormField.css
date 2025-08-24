@@ -23,7 +23,7 @@
 .form-field__input {
   width: 594px;
   height: 48px;
-  padding: 12px 40px 12px 8px;
+  padding: 12px 48px 12px 16px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: var(--font-size-base);
@@ -50,16 +50,19 @@
 }
 
 .form-field__icon {
-  position: absolute !important;
-  right: 12px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-muted);
   cursor: pointer;
   width: 20px;
   height: 20px;
   object-fit: contain;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-field__icon img {
@@ -83,12 +86,13 @@
   
   .form-field__input {
     width: 100%;
-    padding: 12px 40px 12px 8px;
+    padding: 12px 48px 12px 16px;
     height: 48px;
   }
   
   .form-field__icon {
     width: 18px;
     height: 18px;
+    right: 16px;
   }
 } 

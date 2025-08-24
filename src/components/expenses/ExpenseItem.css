@@ -14,6 +14,7 @@
 .expense-item td {
   padding: 16px 12px;
   vertical-align: middle;
+  text-align: left;
 }
 
 /* Expense Name */
@@ -25,6 +26,8 @@
   font-weight: 500;
   color: #1e293b;
   font-size: 14px;
+  line-height: 1.4;
+  display: block;
 }
 
 /* Progress Bar */
@@ -64,22 +67,29 @@
 /* Amount */
 .expense-amount {
   min-width: 120px;
+  text-align: right;
 }
 
 .amount-text {
   font-weight: 600;
   color: #1e293b;
   font-size: 14px;
+  line-height: 1.4;
+  display: block;
+  text-align: right;
 }
 
 /* Date */
 .expense-date {
   min-width: 120px;
+  text-align: left;
 }
 
 .date-text {
   color: #64748b;
   font-size: 13px;
+  line-height: 1.4;
+  display: block;
 }
 
 /* User */
